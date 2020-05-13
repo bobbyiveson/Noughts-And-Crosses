@@ -1,0 +1,284 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+    background-color: #F86624;
+    /* position: relative; */
+}  
+
+h1 {
+    text-align: center;
+    font-size: 50px;
+    font-family: fantasy;
+    background-color: #F9C80E;
+    margin-top: 25px;
+    color: #EA3546;
+    font-weight: bolder;
+    padding-top: 24px;
+    padding-bottom: 14px;
+    text-shadow: 3px 2px 2px whitesmoke;
+    /* #F86624 */
+}
+
+p {
+    position: relative;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bolder;
+    font-family: fantasy;
+    color: #EA3546;
+    padding: 0px;
+    margin: 0px 10px 0px 10px;
+    text-shadow: 3px 2px 2px whitesmoke;
+}
+
+#greetContainer {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    margin-left: -365px;
+    top: 260px;
+}
+
+.greetContainer {
+    text-align: center;
+    height: 100px;
+    width: 700px;
+    background-color: #F9C80E;
+    margin: auto;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 15%;
+    box-shadow: 5px 4px 8px #662E9B;
+}
+
+.greetContainer button {
+    position: relative;
+    display: inline-block;
+    font-size: 25px;
+    font-family: fantasy;
+    font-weight: bolder;
+    color: #F9C80E;
+    margin: 10px 50px;
+    width: 15%;
+    border: none;
+    height: 50px;
+    padding-top: 9px;
+    border-radius: 20%;
+    background-color: #EA3546;
+    text-shadow: 3px 2px 1px #F86624;
+    box-shadow: 3px 2px 2px whitesmoke;
+    outline: none;
+}
+
+#startGame {
+    display: block;
+}
+
+#startGame button {
+    display: block;
+    padding-top: 5px;
+    margin-left: 145px;
+    margin-top: 0px;
+    width: 400px;
+    height: 100px;
+    box-shadow: 5px 4px 2px #F86624;
+    font-size: 70px;
+    outline: none;
+}
+
+#tokenChoice {
+    display: none;
+}
+
+#whoGoesFirst {
+    opacity: 0;
+    display: none;
+}
+
+#announceWinner {
+    display: none;
+}
+
+#announceWinner p {
+    font-size: 40px;
+    padding-top: 26px;
+}
+
+#askForRematch {
+    display: none;
+}
+
+#board {
+    width: 482px;
+    height: 482px;
+    padding: 0px;
+    margin: auto;
+    margin-top: 25px;
+    background-color: #F9C80E;
+}
+
+.square {
+    width: 150px;
+    height: 150px;
+    background-color: #EA3546;
+    padding: 0px;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-bottom: 16px;
+    margin-right: 16px;
+    display: block;
+    float: left;
+}
+
+.square button {
+    padding: 0px;
+    margin: 0px;
+    background-color: transparent;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.XO {
+    text-align: center;
+    font-size: 135px;
+    margin: 0px;
+    padding: 0px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow: none;
+}
+
+.X {
+    color: #662E9B;
+}
+
+.O {
+    color: #43BCCD;
+}
+
+.clearRightMargin {
+    margin-right: 0px;
+}
+
+.clearLeftMargin {
+    margin-left: 0px;
+}
+
+/* Animation Classes */
+.scroll-down-from-top {
+    animation-name: scroll-down-from-top;
+    animation: scroll-down-from-top 1.3s ease-in-out 0.5s forwards;
+}
+
+.scroll-down-from-center {
+    animation-name: scroll-down-from-center;
+    animation: scroll-down-from-center 1.3s ease-in-out forwards;
+}
+
+.dissolve-disappear {
+    animation-name: dissolve-disappear;
+    animation: dissolve-disappear 1.5s ease-in 0.5s forwards;
+}
+
+.dissolve-reappear {
+    animation-name: dissolve-reappear;
+    animation: dissolve-reappear 2s ease-in forwards;
+}
+
+/* Animation Key Frames */
+@keyframes scroll-down-from-top {
+    0% {
+        top: -150px;
+    }
+    20% {
+        top: 260px;
+    }
+    40% {
+        top: 210px;
+    }
+    60% {
+        top: 260px;
+    }
+    80% {
+        top: 240px;
+    }
+    100% {
+        top: 260px;
+    }
+}
+
+@keyframes scroll-down-from-center {
+    0% {
+        top: 260px;
+    }
+    25% {
+        top: 240px;
+    }
+    50% {
+        top: 260px;
+    }
+    75% {
+        top: 210px;
+    }
+    100% {
+        top: 800px;
+    }
+}
+
+@keyframes dissolve-disappear {
+    0% {
+        opacity: 1;
+    }
+    25% {
+        opacity: 0.75;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    75% {
+        opacity: 0.25;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes dissolve-reappear {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 0.25;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    75% {
+        opacity: 0.75;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+#goodBye {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    margin-left: -440px;
+    top: 160px;
+    display: none;
+}
+
+.standOutPara {
+    color: #662E9B;
+    text-align: center;
+    font-size: 100px;
+    font-weight: bolder;
+    font-family: fantasy;
+    padding: 0px;
+    margin: 0px;
+    text-shadow: 5px 4px 2px #43BCCD;
+}

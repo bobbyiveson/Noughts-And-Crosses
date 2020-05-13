@@ -1,0 +1,95 @@
+<html>
+    <head>
+        <title>Noughts And Crosses</title>
+        <link rel="stylesheet" href="style.css" type="text/css">
+    </head>
+
+    <body id="page">
+        <h1>Noughts & Crosses</h1>
+
+        <div id="greetContainer" class="greetContainer">
+            <div id="startGame">
+                <button id="play">PLAY</button>
+            </div>
+            <div id="tokenChoice">
+                <p>Hi & Welcome :) Do You Want to be Noughts or Crosses?</p>
+                <button id="chooseNoughts">Noughts</button>
+                <button id="chooseCrosses">Crosses</button>
+            </div>
+            <div id="whoGoesFirst">
+                <p>Would You Like to go First?</p>
+                <button id="playerStart">Yes</button>
+                <button id="computerStart">No</button>
+            </div>
+            <div id="announceWinner">
+                <p></p>
+            </div>
+            <div id="askForReMatch">
+                <p>Would You Like a Rematch?</p>
+                <button id="playAgain">Yes</button>
+                <button id="noPlayAgain">No</button>
+            </div>
+        </div>
+
+        <div id="goodBye">
+            <p class="standOutPara">Thanks For Playing! <br> Good Bye :)</p>
+        </div>
+
+        <div id="board">
+            <div id="firstCol">
+                <div class="square">
+                    <button id="0">
+                        <p class="XO"> </p>
+                    </button>
+                </div>
+                <div class="square">
+                    <button id="1">
+                        <p class="XO"> </p>
+                    </button>
+                </div>
+                <div class="square clearRightMargin">
+                    <button id="2">
+                        <p class="XO"> </p>
+                    </button>
+                </div>
+            </div>
+            <div id="secondCol">
+                <div class="square">
+                    <button id="3">
+                        <p class="XO"> </p>
+                    </button>
+                </div>
+                <div class="square">
+                    <button id="4">
+                        <p class="XO"> </p>
+                    </button>
+                </div>
+                <div class="square clearRightMargin">
+                    <button id="5">
+                        <p class="XO"> </p>
+                    </button>
+                </div>
+            </div>
+            <div id="thirdCol">
+                <div class="square clearBottomMargin">
+                    <button id="6">
+                        <p class="XO"> </p>
+                    </button>
+                </div>
+                <div class="square clearBottomMargin">
+                    <button id="7">
+                        <p class="XO"> </p>
+                    </button>
+                </div>
+                <div class="square clearBottomMargin clearRightMargin ">
+                    <button id="8">
+                        <p class="XO"> </p>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <script src="script.js" type="module"></script>
+        <!-- <script src="script1.mjs" type="module"></script> -->
+    </body>
+</html>
+  
