@@ -1,64 +1,94 @@
 ////////////USER INTERFACE////////////
 
 // DOM Objects:
-// Greet Container Div:
-export var greetContainerDiv = document.getElementById("greetContainer");
-
+// Message Container Div:
+export var msgContainerDiv = document.getElementById("msgContainer");
 // Start Game Div:
-export var startGameDiv = document.getElementById("startGame");
+export var playGameDiv = document.getElementById("playGame");
 // and it's button
 export var playBtn = document.getElementById("play");
 // and it's event handler
 playBtn.addEventListener("click", function() {
-    greetContainerDiv.classList.add("dissolve-disappear");
+    msgContainerDiv.classList.add("dissolve-disappear");
     setTimeout(function() {
-        greetContainerDiv.style.top = "-150px"; //reposition the greet container
-        greetContainerDiv.classList.remove("dissolve-disappear"); //remove the animation class
-        greetContainerDiv.classList.add("scroll-down-from-top"); //add the next animation class
-        startGameDiv.style.display = "none"; //remove the current start game div
+        setChildDisplayToNone(); // set all child elements display to non
+        msgContainerDiv.classList.remove("dissolve-disappear");
+        msgContainerDiv.classList.add("scroll-down-from-top");
         tokenChoiceDiv.style.display = "block"; //and show the next token choice div
-    }, 2000); // 2 seconds to give enought time for the dissolve disappear animation to finish
+    }, 2000); // 2000 seconds to give enought time for the dissolve disappear animation to finish
+    msgContainerDiv.classList.remove("scroll-down-from-top");
 });
+
+function init() { // first initialise the UI
+    msgContainerDiv.style.display = "block";
+    playGameDiv.style.display = "block";
+}
+
+init();
 
 // Token Choice Div
 export var tokenChoiceDiv = document.getElementById("tokenChoice");
 // and it's buttons
 export var chooseNoughtsBtn = document.getElementById("chooseNoughts");
 export var chooseCrossesBtn = document.getElementById("chooseCrosses");
-// and their event handlers
+// and their event handlers and variables
+export var playerToken; 
+export var computerToken;
+// add class to the element and automatically delay switching the display to "none" until animation is over
+function dissolveDisappear(element) {
+    element.classList.add("dissolve-disappear");
+    setTimeout(function() {
+        element.style.display = "none";
+        element.classList.remove("dissolve-disappear");
+    }, 2000); // create function to get delay -> animation duration + delay
+}
+// add class to element and set delay for when dissolve animation should start
+function dissolveAppear(element, delay) {
+    setTimeout(function() {
+        element.style.display = "block";
+        element.classList.add("dissolve-reappear");
+    }, delay); // maybe set this auto based on animation duration + delay of dissolve disappear
+}
+
 chooseNoughtsBtn.addEventListener("click", function() {
     playerToken = "O";
     computerToken = "X";
-    dissolveTokenChoice();
-    setTimeout(function() {
-        tokenChoiceDiv.style.display = "none";
-        dissolveReappearWhoGoesFirst();
-    }, 2000);
+    dissolveDisappear(tokenChoiceDiv);
+    dissolveAppear(whoPlaysFirstDiv, 2000);
 });
 chooseCrossesBtn.addEventListener("click", function() {
     playerToken = "X";
     computerToken = "O";
-    dissolveTokenChoice();
-    setTimeout(function() {
-        tokenChoiceDiv.style.display = "none";
-        dissolveReappearWhoGoesFirst();
-    }, 2000);
+    dissolveDisappear(tokenChoiceDiv);
+    dissolveAppear(whoPlaysFirstDiv, 2000);
 });
 
-// Who Goes First Div:
-export var whoGoesFirstDiv = document.getElementById("whoGoesFirst");
+// Who Plays First Div:
+export var whoPlaysFirstDiv = document.getElementById("whoPlaysFirst");
 // and it's buttons
 export var playerStartBtn = document.getElementById("playerStart");
 export var computerStartBtn = document.getElementById("computerStart");
-// and their event handlers
+
+// and their event handlers and variables
+export var playerStarts;
 playerStartBtn.addEventListener("click", function() {
-    scrollDownGreetDiv();
-    whoStarts(true);
+    dropToBottom(1300);
+    playerStarts = true;
+    boardReady = true;
+    setTimeout(function() {
+        whoPlaysFirstDiv.classList.remove("dissolve-reappear");
+    }, 1300);
 });
 computerStartBtn.addEventListener("click", function() {
-    scrollDownGreetDiv();
-    whoStarts(false);
+    dropToBottom(1300);
+    playerStarts = false;
+    boardReady = true;
+    setTimeout(function() {
+        whoPlaysFirstDiv.classList.remove("dissolve-reappear");
+    }, 1300);
 });
+
+
 
 // Announce Winner Div:
 export var announceWinnerDiv = document.getElementById("announceWinner");
@@ -70,93 +100,75 @@ export var playAgainBtn = document.getElementById("playAgain");
 export var noPlayAgainBtn = document.getElementById("noPlayAgain");
 // and their event handlers
 playAgainBtn.addEventListener("click", function() {
-    greetContainerDiv.classList.remove("scroll-down-from-top");
-    greetContainerDiv.classList.add("scroll-down-from-center");
-    setTimeout(function() {
-        askForReMatchDiv.style.display = "none";
-    }, 1800);
-    replay();
+    askForReMatchDiv.classList.remove("dissolve-reappear");
+    dropToBottom(1300);
+    boardReady = true;
 });
 noPlayAgainBtn.addEventListener("click", function() {
-    intialiseBoard();
-    askForReMatchDiv.style.display = "none";
-    goodByeDiv.style.display = "block";
-    greetContainerDiv.style.display = "none";
-    goodByeDiv.classList.add("dissolve-reappear");
-    setTimeout(function () {
-        goodByeDiv.classList.remove("dissolve-reappear");
-        goodByeDiv.classList.add("dissolve-disappear");
-    }, 3000);
-    setTimeout(function () {
-        goodByeDiv.classList.remove("dissolve-disappear");
-        goodByeDiv.style.display = "none";
-        startGameDiv.style.display = "block";
-        greetContainerDiv.style.display = "block";
-        greetContainerDiv.style.top = "260px";
-        greetContainerDiv.classList.add("dissolve-reappear");
-    }, 5000);
+    askForReMatchDiv.classList.remove("dissolve-reappear");
+    dissolveDisappear(askForReMatchDiv);
+    dissolveAppear(goodByeDiv, 2000);
     setTimeout(function() {
-        // greetContainerDiv.style.top = "-150px";
-        // tokenChoiceDiv.style.display = "block";
-        // startGameDiv.style.display = "none";
-        // greetContainerDiv.classList.remove("dissolve-reappear");
-        // greetContainerDiv.classList.add("scroll-down-from-top");
-    }, 7000);
+        dropToBottom(1300);
+        setTimeout(function() {
+            goodByeDiv.classList.remove("dissolve-reappear");
+            init();
+        }, 2000);
+    }, 5000);
+    boardReady = false;
 });
 
 // Goodbye Div
-export var goodByeDiv = document.getElementById("goodBye");
-
+var goodByeDiv = document.getElementById("goodBye");
 
 
 // Functions:
-export function dissolveTokenChoice() { //dissolve div
-    tokenChoiceDiv.classList.add("dissolve-disappear");
-}
-export function dissolveReappearWhoGoesFirst() { //bring back the div
-    whoGoesFirstDiv.style.display = "block";
-    whoGoesFirstDiv.classList.add("dissolve-reappear");
-}
-
-export function scrollDownGreetDiv() { // scroll down drop div
-    greetContainerDiv.classList.remove("scroll-down-from-top");
-    greetContainerDiv.classList.add("scroll-down-from-center");
-}
-
 export function announceWinner(message) {  // Announce winner ui
-    whoGoesFirstDiv.style.display = "none";
+    boardReady = false;
+    dropToCenter();
     announceWinnerDiv.style.display = "block";
     announceWinnerDiv.firstElementChild.innerHTML = message;
-    greetContainerDiv.classList.remove("scroll-down-from-center");
-    greetContainerDiv.classList.add("scroll-down-from-top");
     setTimeout(function() {
-        announceWinnerDiv.classList.add("dissolve-disappear");
         askForReMatch();
-    }, 1800);
+    }, 2200);
 }
 
 export function askForReMatch() { // rematch UI
+    announceWinnerDiv.classList.add("dissolve-disappear");
     setTimeout(function() {
         announceWinnerDiv.style.display = "none";
+        announceWinnerDiv.classList.remove("dissolve-disappear");
         askForReMatchDiv.style.display = "block";
         askForReMatchDiv.classList.add("dissolve-reappear");
     }, 2000);   
+    msgContainerDiv.classList.remove("scroll-down-from-top");
 }
 
-export function replay() {
-    intialiseBoard();
-    if(isPlayerLastToStart) { //if player started last time
-        whoStarts(false); //computer starts
-    } else {
-        whoStarts(true); //otherwise players starts
-    }
+export var xoElements = document.getElementsByClassName("XO");
+export var boardReady;
+
+// msgContainerDiv functions
+
+function dropToCenter() {
+    //msgContainerDiv.classList.remove("scroll-down-from-center");
+    msgContainerDiv.style.display = "block";
+    msgContainerDiv.classList.add("scroll-down-from-top");
 }
 
-export function intialiseBoard() {
-    squareIDs = [0, 1, 2, 3, 4, 5, 6, 7, 8]; // reset square ids
-    for(xo of xoElements) {
-        xo.innerHTML = "";
-        xo.classList.remove("X"); //remove classes
-        xo.classList.remove("O"); //from each square
+function dropToBottom(delay) {
+    msgContainerDiv.classList.add("scroll-down-from-center");
+    setTimeout(function() {
+        setChildDisplayToNone();
+        msgContainerDiv.style.display = "none";
+        msgContainerDiv.classList.remove("scroll-down-from-center");
+    }, delay);
+}
+
+function setChildDisplayToNone() {
+    var children = msgContainerDiv.children;
+    for(var child of children) {
+        if(child.style.display == "block") {    
+            child.style.display = "none";
+        }
     }
 }

@@ -3,12 +3,12 @@
         <title>Noughts And Crosses</title>
         <link rel="stylesheet" href="style.css" type="text/css">
     </head>
-
+ 
     <body id="page">
         <h1>Noughts & Crosses</h1>
 
-        <div id="greetContainer" class="greetContainer">
-            <div id="startGame">
+        <div id="msgContainer" class="msgContainer">
+            <div id="playGame">
                 <button id="play">PLAY</button>
             </div>
             <div id="tokenChoice">
@@ -16,7 +16,7 @@
                 <button id="chooseNoughts">Noughts</button>
                 <button id="chooseCrosses">Crosses</button>
             </div>
-            <div id="whoGoesFirst">
+            <div id="whoPlaysFirst">
                 <p>Would You Like to go First?</p>
                 <button id="playerStart">Yes</button>
                 <button id="computerStart">No</button>
@@ -29,66 +29,68 @@
                 <button id="playAgain">Yes</button>
                 <button id="noPlayAgain">No</button>
             </div>
+            <div id="goodBye">
+                <p>Thanks For Playing! <br> Good Bye :)</p>
+            </div>
         </div>
 
-        <div id="goodBye">
-            <p class="standOutPara">Thanks For Playing! <br> Good Bye :)</p>
-        </div>
+        
 
         <div id="board">
             <div id="firstCol">
                 <div class="square">
-                    <button id="0">
-                        <p class="XO"> </p>
+                    <button id="0" class="squareBtn">
+                        <p class="XO">e</p>
                     </button>
                 </div>
                 <div class="square">
-                    <button id="1">
-                        <p class="XO"> </p>
+                    <button id="1" class="squareBtn">
+                        <p class="XO">e</p>
                     </button>
                 </div>
                 <div class="square clearRightMargin">
-                    <button id="2">
-                        <p class="XO"> </p>
+                    <button id="2" class="squareBtn">
+                        <p class="XO">e</p>
                     </button>
                 </div>
             </div>
             <div id="secondCol">
                 <div class="square">
-                    <button id="3">
-                        <p class="XO"> </p>
+                    <button id="3" class="squareBtn">
+                        <p class="XO">e</p>
                     </button>
                 </div>
                 <div class="square">
-                    <button id="4">
-                        <p class="XO"> </p>
+                    <button id="4" class="squareBtn">
+                        <p class="XO">e</p>
                     </button>
                 </div>
                 <div class="square clearRightMargin">
-                    <button id="5">
-                        <p class="XO"> </p>
+                    <button id="5" class="squareBtn">
+                        <p class="XO">e</p>
                     </button>
                 </div>
             </div>
             <div id="thirdCol">
                 <div class="square clearBottomMargin">
-                    <button id="6">
-                        <p class="XO"> </p>
+                    <button id="6" class="squareBtn">
+                        <p class="XO">e</p>
                     </button>
                 </div>
                 <div class="square clearBottomMargin">
-                    <button id="7">
-                        <p class="XO"> </p>
+                    <button id="7" class="squareBtn">
+                        <p class="XO">e</p>
                     </button>
                 </div>
                 <div class="square clearBottomMargin clearRightMargin ">
-                    <button id="8">
-                        <p class="XO"> </p>
+                    <button id="8" class="squareBtn">
+                        <p class="XO">e</p>
                     </button>
                 </div>
             </div>
         </div>
         <script src="script.js" type="module"></script>
+        <!-- <script src="script1.js" type="text/javascript"></script> -->
         <!-- <script src="script1.mjs" type="module"></script> -->
     </body>
 </html>
