@@ -67,9 +67,16 @@ function passPlayToComputer() {
 
 // Generate valid square
 function generateValidSquare() {
+    var bestMove = findBestMoveForComputer();
+    var randomNumStr;
+    //alert(bestMove);
     var randomIndex = Math.floor(Math.random() * (squareIDs.length - 1));
     if(randomIndex >= 0) {
-        var randomNumStr = squareIDs[randomIndex].toString();
+        if(bestMove == -1){
+            randomNumStr = squareIDs[randomIndex].toString();
+        } else {
+            randomNumStr = bestMove;
+        }
     }
     computersSquareChoice = document.getElementById(randomNumStr);
 }
@@ -152,7 +159,7 @@ function replay() {
 function intialiseBoard() {
     squareIDs = [0, 1, 2, 3, 4, 5, 6, 7, 8]; // reset square ids
     for(var xo of xoElements) {
-        xo.innerHTML = "e";
+        xo.innerHTML = "&nbsp";
         xo.classList.remove("X"); //remove classes
         xo.classList.remove("O"); //from each square
     }
@@ -169,31 +176,127 @@ computerStartBtn.addEventListener("click", function(){
 });
 
 
-function chooseBestMoveForComputer() {
+
+
+
+
+
+
+
+
+
+
+
+function findBestMoveForComputer() {
+    var bestMoveIndex = orderOfTokenCheck(computerToken, playerToken);
+    if(bestMoveIndex == -1) {
+        bestMoveIndex = orderOfTokenCheck(playerToken, computerToken);
+    }
+    //alert(bestMoveIndex);
+    return bestMoveIndex;
+}
+
+function orderOfTokenCheck(firstTokenCheck, secondTokenCheck) {
     var xoArray = [];
         for(var xo of xoElements) {
             xoArray.push(xo.innerHTML);
-        } // check all rows
-        var row1 = (xoArray[0] + xoArray[1] + xoArray[2]);
-        var row2 = (xoArray[3] + xoArray[4] + xoArray[5]);
-        var row2 = (xoArray[3] + xoArray[4] + xoArray[5]);
-        var row3 = (xoArray[6] + xoArray[7] + xoArray[8]);
-        var col1 = (xoArray[0] + xoArray[3] + xoArray[6]);
-        var col2 = (xoArray[1] + xoArray[4] + xoArray[7]);
-        var col3 = (xoArray[2] + xoArray[5] + xoArray[8]);
+        } // check all lines of board and set up string var for each line
+        var row0 = (xoArray[0] + xoArray[1] + xoArray[2]);
+        var row1 = (xoArray[3] + xoArray[4] + xoArray[5]);
+        var row2 = (xoArray[6] + xoArray[7] + xoArray[8]);
+        var col0 = (xoArray[0] + xoArray[3] + xoArray[6]);
+        var col1 = (xoArray[1] + xoArray[4] + xoArray[7]);
+        var col2 = (xoArray[2] + xoArray[5] + xoArray[8]);
         var diag1 = (xoArray[0] + xoArray[4] + xoArray[8]);
-        var diag2 = (xoArray[6] + xoArray[4] + xoArray[2]);
-        for(index of row1) {
-            var count = 0;
-            if(index == "e");
+        var diag2 = (xoArray[2] + xoArray[4] + xoArray[6]);
+    // create a dictionary to store all the above strings
+    // key is used to describe the type of line
+    var dict = {r0:row0, r1:row1, r2:row2,
+                c0:col0, c1:col1, c2:col2,
+                d1:diag1, d2:diag2};
+    // iterate through each line (key) in the dictionary
+    var count;
+    for(var key in dict) {
+        count = 0; // set counter for checking each line to 0
+        for(var letter of dict[key]) { // for each letter of each string in the dict
+            if(letter == firstTokenCheck) { // if letter is the same as the computers
+                count++; // increase the counter
+            } else if(letter == secondTokenCheck) {
+                count--;
+            }
         }
-        if(count == 1){}
-
+        if(count == 2) { // once counter is equal to 2
+            var lineKeyAndLineStr = key + dict[key]; // return the line of tokens concatenated to the key  
+            //alert(lineKeyAndLineStr);
+            return calculateBestMoveIndex(lineKeyAndLineStr);
+        }
+    }
+    return -1;
 }
 
 
 
+// determine the right method to calculate the computers best move index based on the string
+// given which contains a) letter for line type ie r -> row, c -> column, d -> diagonal
+// b) number for line type number -> row 1, 2, 3, col 1, 2, 3 or diag 1, 2 and c) str containing
+// the suitable line given ie X_X, XX_, etc
+function calculateBestMoveIndex(lineKeyAndLineStr) {
+    var lineType = lineKeyAndLineStr.charAt(0);
+    var lineTypeNum = parseInt(lineKeyAndLineStr.charAt(1));
+    var lineTokenStr = lineKeyAndLineStr.substring(2);
+    var gapIndex = findGapIndexInLine(lineTokenStr);
+    var bestMoveResult;
+    if(lineType == "r") {
+        bestMoveResult = getSquareNumFromRow(lineTypeNum, gapIndex);
+    } else if(lineType == "c") {
+        bestMoveResult = getSquareNumFromCol(lineTypeNum, gapIndex);
+    } else if(lineType == "d") {
+        if(lineTypeNum == 1) {
+            bestMoveResult = getSquareNumFromDiag1(gapIndex);
+        } else if(lineTypeNum == 2) {
+            bestMoveResult = getSquareNumFromDiag2(gapIndex);
+        }
+    }
+    return bestMoveResult;
+}
+
+//////// code for calculating an index for the computers best move ////////
+
+// used to get the index of a line string which has a gap ie X_X or XX_ or _XX, etc
+function findGapIndexInLine(lineTokenStr) {
+    var gapIndex;
+    for(var letter of lineTokenStr) {
+        if(letter != "X" & letter != "O") {
+            gapIndex = parseInt(lineTokenStr.indexOf(letter));
+            return gapIndex;
+        }
+    }
+}
+// calculate the index of game board based on where there is a gap in string line 
+// for row type lines 
+function getSquareNumFromRow(rowNum, gapIndex) {
+    var result = 3 * rowNum + gapIndex;
+    return result;
+}
+// calculate the index of game board based on where there is a gap in string line 
+// for col type lines
+function getSquareNumFromCol(colNum, gapIndex) {
+    return 3 * gapIndex + colNum;
+}
+// calculate the index of game board based on where there is a gap in string line 
+// for diagonal 1 type lines (from top left to bottom right)
+function getSquareNumFromDiag1(gapIndex) {
+    return 4 * gapIndex;
+}
+// calculate the index of game board based on where there is a gap in string line 
+// for diagonal 2 type lines (from top right to bottom left)
+function getSquareNumFromDiag2(gapIndex) {
+    return 2 * gapIndex + 2;
+}
+
 /////////TODO/////////
-//make the board unclickable until the game is ready
-//add effect on buttons and remove the focus highlight
-//add a play button to start the game
+//add effect on board buttons and remove the focus highlight
+//add mouse pointer on the board buttons
+//when pressing the board buttons fast it puts numbers on board
+//can I rmeove highlighting on the board when i drag and pull the cursor across
+//look into making this responsive for mobile devices
