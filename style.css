@@ -73,7 +73,7 @@ p {
     cursor: pointer;
 }
 
-.msgContainer button:hover {
+.msgContainer button:hover, .square button:hover {
     background-color: rgb(219, 42, 60);
 }
 
@@ -96,6 +96,7 @@ p {
     box-shadow: 3px 3px 2px whitesmoke;
     font-size: 70px;
     outline: none;
+    /* cursor: pointer; */
 }
 
 #playGame button:hover {
@@ -168,6 +169,8 @@ p {
     width: 100%;
     height: 100%;
     border: none;
+    cursor: pointer;
+    outline: none;
 }
 
 div button p {
